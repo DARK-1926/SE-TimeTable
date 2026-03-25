@@ -348,6 +348,8 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
         if room_type == 'COMPUTER_LAB':
             # Allow COMPUTER_LAB or HARDWARE_LAB
             is_type_ok = room['type'] in ['COMPUTER_LAB', 'HARDWARE_LAB']
+            if is_type_ok and 'CS' in course_code.upper() and room_name.upper() in ['L105', 'L206', 'L306', 'L406']:
+                is_type_ok = False
         else:
             # Allow LECTURE_ROOM or SEATER_120 (or other large rooms)
             is_type_ok = room['type'] in ['LECTURE_ROOM', 'SEATER_120']
@@ -388,8 +390,6 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
                     room_schedule['C004'] = {d: set() for d in range(len(DAYS))}
                 if all(si not in room_schedule['C004'][day] for si in slot_indices):
                     course_room_mapping[mapping_key] = 'C004'
-                    for si in slot_indices:
-                        room_schedule['C004'][day].add(si)
                     print(f"    ✅ Assigned C004 for large course {course_code} (needs {student_strength})")
                     return 'C004'
     except Exception:
@@ -400,6 +400,9 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
     # capacity meets the student strength (preferred over leaving unscheduled).
     if room_type == 'COMPUTER_LAB':
         lab_room_names = [rn for rn, info in ROOM_DATA.items() if info['type'] in ('COMPUTER_LAB', 'HARDWARE_LAB')]
+        if 'CS' in course_code.upper():
+            lab_room_names = [rn for rn in lab_room_names if rn.upper() not in ['L105', 'L206', 'L306', 'L406']]
+
         best_pair = None
         best_pair_cap = float('inf')
 
@@ -413,8 +416,8 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
                 r1 = lab_room_names[i]
                 r2 = lab_room_names[j]
                 # both must be available for all slot indices
-                avail1 = all(si not in room_schedule[r1][day] for si in slot_indices)
-                avail2 = all(si not in room_schedule[r2][day] for si in slot_indices)
+                avail1 = all(si not in room_schedule.get(r1, {}).get(day, set()) for si in slot_indices)
+                avail2 = all(si not in room_schedule.get(r2, {}).get(day, set()) for si in slot_indices)
                 if not (avail1 and avail2):
                     continue
                 cap_sum = ROOM_DATA[r1]['capacity'] + ROOM_DATA[r2]['capacity']
@@ -426,10 +429,33 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
             r1, r2 = best_pair
             combined_name = f"{r1}+{r2}"
             course_room_mapping[mapping_key] = combined_name
-            for si in slot_indices:
-                room_schedule[r1][day].add(si)
-                room_schedule[r2][day].add(si)
             print(f"    ✅ Assigned combined labs {combined_name} for {course_code} (combined capacity {best_pair_cap}, needs {student_strength})")
+            return combined_name
+
+        # If 2 labs are not enough, try 3 labs
+        best_triple = None
+        best_triple_cap = float('inf')
+        for i in range(len(lab_room_names)):
+            for j in range(i+1, len(lab_room_names)):
+                for k in range(j+1, len(lab_room_names)):
+                    r1 = lab_room_names[i]
+                    r2 = lab_room_names[j]
+                    r3 = lab_room_names[k]
+                    avail1 = all(si not in room_schedule.get(r1, {}).get(day, set()) for si in slot_indices)
+                    avail2 = all(si not in room_schedule.get(r2, {}).get(day, set()) for si in slot_indices)
+                    avail3 = all(si not in room_schedule.get(r3, {}).get(day, set()) for si in slot_indices)
+                    if not (avail1 and avail2 and avail3):
+                        continue
+                    cap_sum = ROOM_DATA[r1]['capacity'] + ROOM_DATA[r2]['capacity'] + ROOM_DATA[r3]['capacity']
+                    if cap_sum >= student_strength and cap_sum < best_triple_cap:
+                        best_triple = (r1, r2, r3)
+                        best_triple_cap = cap_sum
+                        
+        if best_triple:
+            r1, r2, r3 = best_triple
+            combined_name = f"{r1}+{r2}+{r3}"
+            course_room_mapping[mapping_key] = combined_name
+            print(f"    ✅ Assigned triple labs {combined_name} for {course_code} (combined capacity {best_triple_cap}, needs {student_strength})")
             return combined_name
 
     # No single free and suitable room found
@@ -626,9 +652,10 @@ def place_course_on_slots(course_row, timetable, day, slot_indices, comp_type,
         timetable[day][si]['faculty'] = faculty if si_idx == 0 else ''
         timetable[day][si]['classroom'] = candidate_room if si_idx == 0 else ''
         professor_schedule[faculty][day].add(si)
-        if candidate_room not in room_schedule:
-            room_schedule[candidate_room] = {d: set() for d in range(len(DAYS))}
-        room_schedule[candidate_room][day].add(si)
+        for crn in str(candidate_room).split('+'):
+            if crn not in room_schedule:
+                room_schedule[crn] = {d: set() for d in range(len(DAYS))}
+            room_schedule[crn][day].add(si)
 
     if day not in course_day_components[base_code]:
         course_day_components[base_code][day] = []
@@ -788,9 +815,10 @@ def schedule_combined_courses(timetable, combined_courses, semester, professor_s
                         timetable[day][si]['faculty'] = faculty if si_idx == 0 else ''
                         timetable[day][si]['classroom'] = candidate_room if si_idx == 0 else ''
                         professor_schedule[faculty][day].add(si)
-                        if candidate_room not in room_schedule:
-                            room_schedule[candidate_room] = {d: set() for d in range(len(DAYS))}
-                        room_schedule[candidate_room][day].add(si)
+                        for crn in str(candidate_room).split('+'):
+                            if crn not in room_schedule:
+                                room_schedule[crn] = {d: set() for d in range(len(DAYS))}
+                            room_schedule[crn][day].add(si)
 
                     if day not in course_day_components[base_code]:
                         course_day_components[base_code][day] = []
@@ -853,9 +881,10 @@ def apply_combined_schedule(timetable, combined_schedule, professor_schedule, ro
             timetable[day][si]['faculty'] = faculty if si_idx == 0 else ''
             timetable[day][si]['classroom'] = room if si_idx == 0 else ''
             professor_schedule[faculty][day].add(si)
-            if room not in room_schedule:
-                room_schedule[room] = {d: set() for d in range(len(DAYS))}
-            room_schedule[room][day].add(si)
+            for crn in str(room).split('+'):
+                if crn not in room_schedule:
+                    room_schedule[crn] = {d: set() for d in range(len(DAYS))}
+                room_schedule[crn][day].add(si)
 
         if day not in course_day_components[base_code]:
             course_day_components[base_code][day] = []
@@ -1499,9 +1528,10 @@ def generate_all_timetables():
 
                             for si in slot_indices:
                                 professor_schedule[faculty][day].add(si)
-                                if candidate_room not in room_schedule:
-                                    room_schedule[candidate_room] = {d: set() for d in range(len(DAYS))}
-                                room_schedule[candidate_room][day].add(si)
+                                for crn in str(candidate_room).split('+'):
+                                    if crn not in room_schedule:
+                                        room_schedule[crn] = {d: set() for d in range(len(DAYS))}
+                                    room_schedule[crn][day].add(si)
 
                             for si_idx, si in enumerate(slot_indices):
                                 timetable[day][si]['type'] = comp_type
@@ -1610,9 +1640,10 @@ def generate_all_timetables():
                                     timetable[day][si]['faculty'] = faculty if si_idx == 0 else ''
                                     timetable[day][si]['classroom'] = candidate_room if si_idx == 0 else ''
                                     professor_schedule[faculty][day].add(si)
-                                    if candidate_room not in room_schedule:
-                                        room_schedule[candidate_room] = {d: set() for d in range(len(DAYS))}
-                                    room_schedule[candidate_room][day].add(si)
+                                    for crn in str(candidate_room).split('+'):
+                                        if crn not in room_schedule:
+                                            room_schedule[crn] = {d: set() for d in range(len(DAYS))}
+                                        room_schedule[crn][day].add(si)
                                 
                                 if day not in course_day_components[base_code]:
                                     course_day_components[base_code][day] = []
@@ -1836,9 +1867,10 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
                         timetable[day][si]['faculty'] = faculty_local if si_idx == 0 else ''
                         timetable[day][si]['classroom'] = candidate_room if si_idx == 0 else ''
                         professor_schedule[faculty_local][day].add(si)
-                        if candidate_room not in room_schedule:
-                            room_schedule[candidate_room] = {d: set() for d in range(len(DAYS))}
-                        room_schedule[candidate_room][day].add(si)
+                        for crn in str(candidate_room).split('+'):
+                            if crn not in room_schedule:
+                                room_schedule[crn] = {d: set() for d in range(len(DAYS))}
+                            room_schedule[crn][day].add(si)
                     if day not in course_day_components[get_base_course_code(code_local)]:
                         course_day_components[get_base_course_code(code_local)][day] = []
                     course_day_components[get_base_course_code(code_local)][day].append(comp_type)
@@ -1955,6 +1987,9 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
                         rooms_assigned = []
                         faculties_assigned = []
 
+                        # Temporarily keep track of rooms assigned in this attempt so they don't overlap within the basket
+                        temp_assigned_rooms_slots = []
+
                         for row in rows:
                             course_code = str(row.get('Course Code', '')).strip()
                             base = get_base_course_code(course_code)
@@ -1973,13 +2008,24 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
                                 failed = True
                                 break
 
+                            # Mark this room busy temporarily in room_schedule so that the next course in the basket gets a different room!
+                            for rn in candidate_room_c.split('+'):
+                                if rn not in room_schedule:
+                                    room_schedule[rn] = {d: set() for d in range(len(DAYS))}
+                                for si in slot_indices_local:
+                                    room_schedule[rn][day].add(si)
+                                    temp_assigned_rooms_slots.append((rn, day, si))
+
                             # Tentatively record assignment
                             course_room_map[course_code] = (candidate_room_c, faculty_c, base)
                             rooms_assigned.append(candidate_room_c)
                             faculties_assigned.append(faculty_c)
 
                         if failed:
-                            # revert any tentative course_room_mapping done by find_suitable_room_for_slot? (mapping is persistent)
+                            # Revert temporary assignments
+                            for rn, d_idx, si in temp_assigned_rooms_slots:
+                                if si in room_schedule.get(rn, {}).get(d_idx, set()):
+                                    room_schedule[rn][d_idx].remove(si)
                             continue
 
                         # All courses in basket can be placed in these slot_indices; commit assignments
@@ -1993,12 +2039,9 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
                             timetable[day][si]['faculty'] = '/'.join(unique_facs) if si_idx == 0 else ''
                             timetable[day][si]['classroom'] = '/'.join(rooms_assigned) if si_idx == 0 else ''
 
-                            # Mark professors and rooms busy per course
+                            # Mark professors busy per course
                             for course_code, (room_c, fac_c, base_c) in course_room_map.items():
                                 professor_schedule[fac_c][day].add(si)
-                                if room_c not in room_schedule:
-                                    room_schedule[room_c] = {d: set() for d in range(len(DAYS))}
-                                room_schedule[room_c][day].add(si)
 
                         if rep_base not in course_day_components:
                             course_day_components[rep_base] = {}
