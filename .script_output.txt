@@ -1,0 +1,486 @@
+Γ£à Loaded 145 courses from combined1.csv
+Γ£à Processed student strengths (defaulting to 50)
+Γ£à Loaded 47 faculty from FACULTY.csv
+Γ£à Loaded 31 rooms from rooms.csv
+
+≡ƒôè Room inventory: 31 rooms loaded with capacity data.
+   - COMPUTER_LAB: 10
+   - LECTURE_ROOM: 16
+   - LIBRARY: 1
+   - SEATER_120: 2
+   - SEATER_240: 2
+ΓÅ░ Generated 20 time slots (no morning break, lunch 13:15-14:00)
+
+================================================================================
+≡ƒÄô IIIT DHARWAD TIMETABLE GENERATOR
+================================================================================
+
+≡ƒöº Configuration:
+    - No morning break (removed 10:30-10:45)
+    - Lunch break: 13:15-14:00 (extended)
+    - Lecture duration: 90 minutes
+    - Tutorial duration: 60 minutes
+    - Lab duration: 120 minutes
+    - Min gap between lectures: 10 minutes
+================================================================================
+
+
+================================================================================
+≡ƒÄô GLOBAL ELECTIVE BASKET SCHEDULING
+================================================================================
+
+≡ƒôÜ Semester 2, Basket B2: 4 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Thursday at 15:40
+    ??? Lecture 2/2: Friday at 10:30
+    Γ£à Tutorial 1/1: Wednesday at 10:00
+    ≡ƒôï Total sessions scheduled: 3
+
+≡ƒôÜ Semester 4, Basket B2: 3 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Wednesday at 15:40
+    ??? Lecture 2/2: Friday at 09:00
+    Γ£à Tutorial 1/1: Monday at 11:00
+    ≡ƒôï Total sessions scheduled: 3
+
+≡ƒôÜ Semester 6, Basket B1: 21 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Monday at 10:00
+    ??? Lecture 2/2: Wednesday at 10:30
+    Γ£à Tutorial 1/1: Thursday at 15:30
+    ≡ƒôï Total sessions scheduled: 3
+
+≡ƒôÜ Semester 6, Basket B2: 15 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Friday at 14:00
+    ??? Lecture 2/2: Tuesday at 10:30
+    Γ£à Tutorial 1/1: Thursday at 10:00
+    ≡ƒôï Total sessions scheduled: 3
+
+≡ƒôÜ Semester 6, Basket B3: 12 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Thursday at 11:00
+    ??? Lecture 2/2: Friday at 10:45
+    Γ£à Tutorial 1/1: Wednesday at 10:00
+    ≡ƒôï Total sessions scheduled: 3
+
+≡ƒôÜ Semester 6, Basket B4: 9 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Tuesday at 14:30
+    ??? Lecture 2/2: Thursday at 16:00
+    Γ£à Tutorial 1/1: Wednesday at 10:30
+    ≡ƒôï Total sessions scheduled: 3
+
+≡ƒôÜ Semester 6, Basket B5: 27 courses
+    Structure: L=3h, T=1h, P=0h
+    ??? Lecture 1/2: Wednesday at 16:00
+    ??? Lecture 2/2: Thursday at 09:00
+    Γ£à Tutorial 1/1: Tuesday at 16:30
+    ≡ƒôï Total sessions scheduled: 3
+
+================================================================================
+Γ£à Global basket scheduling complete: 7 baskets
+================================================================================
+
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for CSE_2_A...
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 4 courses
+    Γ£à Assigned C004 for large course CS162 (needs 220)
+    Γ£à Assigned C004 for large course CS162 (needs 220)
+
+≡ƒôû Scheduling non-elective courses for CSE_2_A...
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Swagatika Sahoo' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for CSE_2_B...
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 4 courses
+
+≡ƒôû Scheduling non-elective courses for CSE_2_B...
+    Γ£à Assigned C004 for large course CS163 (needs 140)
+    Γ£à Assigned combined labs 407+408 for CS163 (cap 156, needs 140)
+  ΓÜá∩╕Å  Faculty 'Dr. Swagatika Sahoo' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Shrishendu Layek' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for CSE_4_A...
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 3 courses
+
+≡ƒôû Scheduling non-elective courses for CSE_4_A...
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for CSE_4_B...
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 3 courses
+
+≡ƒôû Scheduling non-elective courses for CSE_4_B...
+  ΓÜá∩╕Å  Faculty 'Dr. Girish' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+    Γ£à Assigned combined labs L105+L106 for CS266 (cap 120, needs 85)
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for CSE_6_A...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+    Γ£à Applied B1 schedule to 7 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 5 courses
+    Γ£à Applied B3 schedule to 4 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+    Γ£à Applied B4 schedule to 3 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+    Γ£à Applied B5 schedule to 9 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôû Scheduling non-elective courses for CSE_6_A...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for CSE_6_B...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+    Γ£à Applied B1 schedule to 7 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 5 courses
+    Γ£à Applied B3 schedule to 4 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+    Γ£à Applied B4 schedule to 3 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+    Γ£à Applied B5 schedule to 9 courses
+
+≡ƒôû Scheduling non-elective courses for CSE_6_B...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. B' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for DSAI_2...
+  ΓÜá∩╕Å  Faculty 'Dr. A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. B' not found in FACULTY.csv
+
+≡ƒôû Scheduling non-elective courses for DSAI_2...
+    Γ£à Assigned C004 for large course DS164 (needs 132)
+    Γ£à Assigned combined labs L105+407 for DS164 (cap 138, needs 132)
+    Γ£à Assigned C004 for large course CS164 (needs 132)
+    Γ£à Assigned combined labs L105+407 for CS164 (cap 138, needs 132)
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for DSAI_4...
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôû Scheduling non-elective courses for DSAI_4...
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for DSAI_6...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+    Γ£à Applied B1 schedule to 7 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 5 courses
+    Γ£à Applied B3 schedule to 4 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+    Γ£à Applied B4 schedule to 3 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+    Γ£à Applied B5 schedule to 9 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+
+≡ƒôû Scheduling non-elective courses for DSAI_6...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr Prabhu Prasad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. B' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for ECE_2...
+
+≡ƒôû Scheduling non-elective courses for ECE_2...
+  ΓÜá∩╕Å  Faculty 'Dr Prabhu Prasad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadish D.N' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for ECE_4...
+
+≡ƒôû Scheduling non-elective courses for ECE_4...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+
+≡ƒôï Applying basket schedules for ECE_6...
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+    Γ£à Applied B1 schedule to 7 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+    Γ£à Applied B2 schedule to 5 courses
+    Γ£à Applied B3 schedule to 4 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+    Γ£à Applied B4 schedule to 3 courses
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+    Γ£à Applied B5 schedule to 9 courses
+
+≡ƒôû Scheduling non-elective courses for ECE_6...
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Jagadeesha R Bhat' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Utkarsh' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. S R M Prasanna' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Girish Revadigar' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sruthi' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Prof. Arulalan Rajan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Nataraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Vivekraj' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pramod Yelmevad' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Pavan' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Sunil P V' not found in FACULTY.csv
+  ΓÜá∩╕Å  Faculty 'Dr. Chinmayananda A' not found in FACULTY.csv
+
+Γ£à Combined timetable saved as C:\Users\KATTA UDAYBALAJI\OneDrive\Desktop\SE Project\Automated-Time-Table-Scheduling-at-IIIT-Dharwad\output\timetable_all_departments.xlsx
+Γ£à Saved teacher_timetables.xlsx
+Γ£à Saved unscheduled_courses.xlsx with 11 courses
+
+================================================================================
+Γ£à TIMETABLE GENERATION COMPLETE!
+================================================================================
+
+≡ƒôü Output files saved in: C:\Users\KATTA UDAYBALAJI\OneDrive\Desktop\SE Project\Automated-Time-Table-Scheduling-at-IIIT-Dharwad\output
+    1. timetable_all_departments.xlsx - Main timetable
+    2. teacher_timetables.xlsx - Faculty schedules
+    3. unscheduled_courses.xlsx - Courses that couldn't be scheduled
+
+≡ƒÆí Tips:
+    - Check unscheduled_courses.xlsx to see which courses failed
+    - If many courses are unscheduled, consider:
+      * Adding more computer labs or larger lecture rooms
+      * Relaxing some constraints
+      * Extending time slots into evening
+================================================================================
+
