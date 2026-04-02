@@ -93,10 +93,16 @@ try:
         str(row['Name']).strip().lower(): str(row['Faculty ID']).strip()
         for _, row in faculty_df.iterrows()
     }
+    # Build reverse dict: Faculty ID -> Display Name (for output)
+    FACULTY_ID_TO_NAME = {
+        str(row['Faculty ID']).strip(): str(row['Name']).strip()
+        for _, row in faculty_df.iterrows()
+    }
     print(f"✅ Loaded {len(FACULTY_DATA)} faculty from FACULTY.csv")
 except FileNotFoundError:
     print("⚠️ FACULTY.csv not found — faculty validation disabled")
     FACULTY_DATA = {}
+    FACULTY_ID_TO_NAME = {}
 
 try:
     rooms_df = pd.read_csv(os.path.join(INPUT_DIR, 'rooms.csv'))
@@ -214,7 +220,7 @@ def is_minor_slot(slot):
     return False
 
 def get_all_faculty(faculty_field):
-    """Bug 9 fix: return list of ALL faculty names listed for a course."""
+    """Bug 9 fix: return list of ALL faculty IDs listed for a course."""
     if pd.isna(faculty_field) or str(faculty_field).strip().lower() in ['nan', 'none', '']:
         return ["TBD"]
     s = str(faculty_field).strip()
@@ -224,7 +230,9 @@ def get_all_faculty(faculty_field):
     return [s]
 
 def select_faculty(faculty_field, strict=True):
-    """Return first faculty name after splitting; validate against FACULTY_DATA if strict."""
+    """Return primary faculty ID from the faculty field.
+    Since combined1.csv now uses Faculty IDs (e.g. F002), this returns the ID directly.
+    Validates that the ID exists in FACULTY_ID_TO_NAME if strict."""
     if pd.isna(faculty_field) or str(faculty_field).strip().lower() in ['nan', 'none', '']:
         return "TBD"
     s = str(faculty_field).strip()
@@ -232,20 +240,34 @@ def select_faculty(faculty_field, strict=True):
         if sep in s:
             s = s.split(sep)[0].strip()
             break
-    # Bug 1 fix: validate against FACULTY.csv
-    if FACULTY_DATA and s.lower() not in FACULTY_DATA:
-        print(f"  ⚠️  Faculty '{s}' not found in FACULTY.csv")
-        if strict:
-            return None  # signals caller to skip / mark unscheduled
+    # Validate: if it looks like a faculty ID (e.g. F001), check FACULTY_ID_TO_NAME
+    if FACULTY_ID_TO_NAME and s.upper().startswith('F') and s not in FACULTY_ID_TO_NAME:
+        # Also try case-insensitive lookup
+        if s.upper() not in {k.upper() for k in FACULTY_ID_TO_NAME}:
+            print(f"  ⚠️  Faculty ID '{s}' not found in FACULTY.csv")
+            if strict:
+                return None
     return s
 
-def get_faculty_id(name):
-    """Return 'FID:Name' composite key for unique identification (Bug 2 fix)."""
-    norm = str(name).strip().lower()
-    fid = FACULTY_DATA.get(norm, None)
-    if fid:
-        return f"{fid}:{name.strip()}"
-    return name.strip()
+def get_faculty_id(faculty_id_or_name):
+    """Return unique faculty key. Since combined1.csv now uses Faculty IDs,
+    this just returns the ID string directly."""
+    return str(faculty_id_or_name).strip()
+
+def resolve_faculty_name(faculty_id):
+    """Resolve a Faculty ID (e.g. 'F002') to a display name (e.g. 'Dr. Anand Barangi').
+    Falls back to the ID itself if not found in FACULTY_ID_TO_NAME.
+    Handles multiple IDs separated by '/' and 'TBD'."""
+    if not faculty_id or str(faculty_id).strip().lower() in ['nan', 'none', '', 'tbd']:
+        return str(faculty_id).strip() if faculty_id else 'TBD'
+    s = str(faculty_id).strip()
+    # Handle multiple faculty IDs (e.g. "F050/F051")
+    for sep in ['/', ',', '&', ';']:
+        if sep in s:
+            parts = [p.strip() for p in s.split(sep) if p.strip()]
+            resolved = [FACULTY_ID_TO_NAME.get(p, p) for p in parts]
+            return sep.join(resolved)
+    return FACULTY_ID_TO_NAME.get(s, s)
 
 def get_course_priority(row):
     try:
@@ -349,22 +371,26 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
     """
     mapping_key = f"{course_code}_{component_type}"
     
-    # Bug 8 fix: Prefer C004 for -C004 courses but fall through to general search if busy.
-    if "-C004" in course_code.upper():
-        forced_room = "C004"
-        room_schedule.setdefault(forced_room, {d: set() for d in range(len(DAYS))})
+    # Bug 8 fix: Prefer the room specified in the course code suffix (e.g. -C004, -C005)
+    # Dynamically detect room suffix from course code instead of hardcoding C004.
+    import re as _re
+    _room_suffix_match = _re.search(r'-(C\d{3})$', course_code.upper())
+    if _room_suffix_match:
+        forced_room = _room_suffix_match.group(1)
+        if forced_room in ROOM_DATA:
+            room_schedule.setdefault(forced_room, {d: set() for d in range(len(DAYS))})
 
-        if mapping_key not in course_room_mapping:
-            if all(si not in room_schedule[forced_room][day] for si in slot_indices):
-                course_room_mapping[mapping_key] = forced_room
-                return forced_room
-            # C004 busy — fall through to general best-fit search below (do NOT return None)
-        else:
-            booked = course_room_mapping[mapping_key]
-            room_schedule.setdefault(booked, {d: set() for d in range(len(DAYS))})
-            if all(si not in room_schedule[booked][day] for si in slot_indices):
-                return booked
-            # Previously booked room now busy — fall through to retry
+            if mapping_key not in course_room_mapping:
+                if all(si not in room_schedule[forced_room][day] for si in slot_indices):
+                    course_room_mapping[mapping_key] = forced_room
+                    return forced_room
+                # Preferred room busy — fall through to general best-fit search below
+            else:
+                booked = course_room_mapping[mapping_key]
+                room_schedule.setdefault(booked, {d: set() for d in range(len(DAYS))})
+                if all(si not in room_schedule[booked][day] for si in slot_indices):
+                    return booked
+                # Previously booked room now busy — fall through to retry
     
     # This is the logic for all *other* courses (including shared electives)
     if mapping_key in course_room_mapping:
@@ -400,8 +426,8 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
         elif room_type == 'HARDWARE_LAB':
             is_type_ok = room['type'] == 'HARDWARE_LAB'   # strict
         else:
-            # Allow LECTURE_ROOM or SEATER_120 (or other large rooms)
-            is_type_ok = room['type'] in ['LECTURE_ROOM', 'SEATER_120']
+            # Allow LECTURE_ROOM, SEATER_120, or SEATER_240 (all large rooms)
+            is_type_ok = room['type'] in ['LECTURE_ROOM', 'SEATER_120', 'SEATER_240']
         
         # --- THIS IS THE KEY FIX ---
         is_capacity_ok = (room['capacity'] >= student_strength)
@@ -426,25 +452,32 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
         course_room_mapping[mapping_key] = best_room
         return best_room
 
-    # Special preference: if the course has more than 120 students and room C004
-    # exists (240 seater), prefer assigning C004 for non-lab components and do
-    # NOT fall back to combining smaller rooms. This keeps large courses in
-    # the single large hall instead of splitting across multiple rooms.
+    # Dynamic large-room fallback: if the course has more than 200 students,
+    # try ALL available large rooms (e.g. SEATER_240) instead of hardcoding C004.
+    # This ensures newly added 240-seaters (C005, etc.) are also considered.
     try:
-        if student_strength > 120 and 'C004' in ROOM_DATA and room_type != 'COMPUTER_LAB':
-            c004 = ROOM_DATA['C004']
-            if c004['capacity'] >= student_strength:
-                # Ensure room schedule entry exists
-                if 'C004' not in room_schedule:
-                    room_schedule['C004'] = {d: set() for d in range(len(DAYS))}
-                if all(si not in room_schedule['C004'][day] for si in slot_indices):
-                    course_room_mapping[mapping_key] = 'C004'
+        if student_strength > 200 and room_type not in ('COMPUTER_LAB', 'HARDWARE_LAB'):
+            # Gather all large rooms that can fit the student strength, sorted by capacity (smallest first)
+            large_rooms = [
+                (rn, info) for rn, info in ROOM_DATA.items()
+                if info['type'] in ('SEATER_240', 'SEATER_120', 'LECTURE_ROOM')
+                and info['capacity'] >= student_strength
+            ]
+            large_rooms.sort(key=lambda x: x[1]['capacity'])
+            random.shuffle(large_rooms)  # randomise among same-capacity rooms
+            large_rooms.sort(key=lambda x: x[1]['capacity'])  # stable re-sort by capacity
+
+            for large_room_name, large_room_info in large_rooms:
+                if large_room_name not in room_schedule:
+                    room_schedule[large_room_name] = {d: set() for d in range(len(DAYS))}
+                if all(si not in room_schedule[large_room_name][day] for si in slot_indices):
+                    course_room_mapping[mapping_key] = large_room_name
                     for si in slot_indices:
-                        room_schedule['C004'][day].add(si)
-                    print(f"    ✅ Assigned C004 for large course {course_code} (needs {student_strength})")
-                    return 'C004'
+                        room_schedule[large_room_name][day].add(si)
+                    print(f"    ✅ Assigned {large_room_name} for large course {course_code} (needs {student_strength})")
+                    return large_room_name
     except Exception:
-        # If anything goes wrong with the C004 attempt, fall through to normal logic
+        # If anything goes wrong with the large-room attempt, fall through to normal logic
         pass
 
     # Bug 6 fix: Try combinations of 1, 2, 3... labs until combined capacity is met.
@@ -2293,23 +2326,21 @@ def write_timetable_to_sheet(ws, timetable, section_subject_color, course_facult
                         })
                     display = f"{basket_label}\n{typ}"
                 else:
-                    display = f"{code}\n{typ}\nRoom: {cls}\n{fac}"
-                    # Record metadata for merged ranges so teacher timetable
-                    # can fill every slot in the span (merged cells only keep
-                    # the value in the first column).
-                    if len(span) > 1:
-                        start_col = slot_idx + 2
-                        end_col = slot_idx + 2 + len(span) - 1
-                        META_ENTRIES.append({
-                            'sheet': ws.title,
-                            'row': row_num,
-                            'start_col': start_col,
-                            'end_col': end_col,
-                            'faculty': fac,
-                            'classroom': cls,
-                            'typ': typ,
-                            'code': code
-                        })
+                    display = f"{code}\n{typ}\nRoom: {cls}\n{resolve_faculty_name(fac)}"
+                    # Record metadata for ALL cells (merged and single) so
+                    # teacher timetable uses Faculty IDs as keys, not names.
+                    start_col = slot_idx + 2
+                    end_col = slot_idx + 2 + len(span) - 1
+                    META_ENTRIES.append({
+                        'sheet': ws.title,
+                        'row': row_num,
+                        'start_col': start_col,
+                        'end_col': end_col,
+                        'faculty': fac,
+                        'classroom': cls,
+                        'typ': typ,
+                        'code': code
+                    })
                 
                 # Use basket label color for all basket slots
                 if basket_label and basket_label in section_subject_color:
@@ -2384,7 +2415,7 @@ def write_timetable_to_sheet(ws, timetable, section_subject_color, course_facult
             ss_courses.append({
                 'code': str(course['Course Code']),
                 'name': str(course['Course Name']),
-                'faculty': str(course['Faculty'])
+                'faculty': resolve_faculty_name(str(course['Faculty']))
             })
     
     if ss_courses:
@@ -2457,7 +2488,7 @@ def write_timetable_to_sheet(ws, timetable, section_subject_color, course_facult
                 c = str(int(course_row['C'])) if pd.notna(course_row['C']) else "0"
                 ltps_value = f"{l}-{t}-{p}-{s}-{c}"
                 course_name = str(course_row['Course Name'])
-                fac_name = course_faculty_map.get(code, '')
+                fac_name = resolve_faculty_name(course_faculty_map.get(code, ''))
                 break
         
         cells = [
@@ -2764,12 +2795,22 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
     title_font = Font(bold=True, size=14)
     cell_align = Alignment(horizontal="center", vertical="center", wrap_text=True)
     
+    # Build disambiguation map: detect Faculty IDs that resolve to the same name
+    _name_to_ids = {}
+    for t in teacher_slots.keys():
+        dn = resolve_faculty_name(t)
+        _name_to_ids.setdefault(dn, []).append(t)
+
     for teacher in sorted(teacher_slots.keys()):
-        safe_name = teacher[:31] or "Unknown"
+        display_name = resolve_faculty_name(teacher)
+        # Disambiguate if multiple Faculty IDs share the same display name
+        if len(_name_to_ids.get(display_name, [])) > 1:
+            display_name = f"{display_name} ({teacher})"
+        safe_name = display_name[:31] or "Unknown"
         ws = twb.create_sheet(title=safe_name)
         
         ws.merge_cells("A1:{}1".format(get_column_letter(len(slot_headers) + 1)))
-        title_cell = ws.cell(row=1, column=1, value=f"{teacher} — Weekly Timetable")
+        title_cell = ws.cell(row=1, column=1, value=f"{display_name} — Weekly Timetable")
         title_cell.font = title_font
         title_cell.alignment = Alignment(horizontal="center", vertical="center")
         
