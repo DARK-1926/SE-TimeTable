@@ -1,0 +1,4 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode,CrossDeptGroup,CrossDeptMode
+CSE,2,MA163,Linear Algebra,3,1,0,0,2,Dr. Anand,YES,110,ALL,COMBINED,CE_SHARED_1,COMBINED
+DSAI,2,MA163,Linear Algebra,3,1,0,0,2,Dr. Anand,YES,132,ALL,COMBINED,CE_SHARED_1,COMBINED
+ECE,2,MA163,Linear Algebra,3,1,0,0,2,Dr. Anand,YES,83,ALL,COMBINED,CE_SHARED_1,COMBINED

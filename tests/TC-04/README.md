@@ -1,10 +1,10 @@
 # TC-04: Faculty Overload (White Box)
 **Category**: Faculty & Conflict Constraints
 
-- **Objective**: Can one professor teach 15 different subjects without time conflicts?
-- **Setup**: 15 CORE courses all assigned to Dr. Overloaded. Plenty of rooms.
+- **Objective**: Can one professor teach 15 subjects without time conflicts?
+- **Setup**: 15 unique CORE courses ALL Schedule=YES, assigned to Dr. Overloaded. 20 rooms.
 - **Expected**: FAIL
 
 ### Results
-- **Unscheduled**: 9 components
-- **Insight**: The scheduler correctly prevents a single faculty member from being in two places at once. Only 6 of 15 courses fit into the professors weekly schedule.
+- **Unscheduled**: 11 components
+- **Insight**: The scheduler prevents double-booking. With 15 courses each needing L=3h + T=1h, Dr. Overloaded's weekly schedule overflows. Only ~4 courses fit, proving `check_professor_availability` works.

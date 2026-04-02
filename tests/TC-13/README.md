@@ -7,4 +7,4 @@
 
 ### Results
 - **Unscheduled**: 8 components
-- **Insight**: Even with ample rooms, 20 core subjects generate ~50+ weekly sessions that cannot fit into a students ~35-hour schedule. This proves student availability is the hardest constraint.
+- **Insight**: 20 core subjects generate ~50+ weekly sessions that cannot fit a ~35-hour student schedule. Human time is the ultimate hard constraint, beyond rooms or faculty.

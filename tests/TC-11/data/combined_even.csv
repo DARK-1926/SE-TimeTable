@@ -1,6 +1,12 @@
-Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,total_students,Section,SectionMode,Schedule
-CSE,2,MA163,Linear Algebra,3,1,0,0,2,Dr. Anand,110,ALL,COMBINED,
-CSE,2,CS162,Optimization,3,1,0,0,2,Dr. Guha,110,ALL,COMBINED,
-CSE,2,B1-CS154,Intro Data Analytics,3,1,0,0,2,Dr. Abdul,30,,,YES
-CSE,2,B1-EC156,Intro Sensors,3,1,0,0,2,Dr. Eswaran,20,,,YES
-CSE,2,B1-ASD152,Visual Design,3,1,0,0,2,Dr. Sandesh,15,,,YES
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode
+CSE,2,MA163,Linear Algebra,3,1,0,0,2,Dr. Anand,YES,110,ALL,COMBINED
+CSE,2,CS162,Optimization,3,1,0,0,2,Dr. Guha,YES,110,ALL,COMBINED
+CSE,2,CS163,Data Structures,3,0,2,0,4,Dr. Vivekraj,YES,110,ALL,COMBINED
+CSE,2,CS208,Computer Architecture,3,0,2,0,2,Dr. Prabhu,YES,110,ALL,COMBINED
+CSE,2,CS201,Discrete Math,3,0,0,0,3,Dr. Hazra,YES,110,ALL,COMBINED
+CSE,2,B1-CS154,Data Analytics,3,1,0,0,2,Dr. Abdul,YES,30,,
+CSE,2,B1-EC156,Sensor Tech,3,1,0,0,2,Dr. Eswaran,YES,20,,
+CSE,2,B1-ASD152,Visual Design,3,1,0,0,2,Dr. Sandesh,YES,15,,
+CSE,2,B2-DS151,Linux,3,1,0,0,2,Dr. Layek,YES,25,,
+CSE,2,B2-CS151,Cybersecurity,3,1,0,0,2,Dr. Rajendra,YES,20,,
+CSE,2,B4-HS159,Quantum Physics,3,1,0,0,2,Dr. Physics,YES,10,,

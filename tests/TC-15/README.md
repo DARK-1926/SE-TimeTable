@@ -2,9 +2,9 @@
 **Category**: Temporal & Adjacency Constraints
 
 - **Objective**: Does the scheduler ever place a class during lunch (13:15-14:00)?
-- **Setup**: 5 core courses, sufficient rooms.
+- **Setup**: 5 core courses, 10 rooms.
 - **Expected**: PASS
 
 ### Results
 - **Unscheduled**: 0 (Pass)
-- **Insight**: The is_break_time_slot function correctly blocks the 13:15-14:00 lunch window. All 5 courses scheduled around the break.
+- **Insight**: `is_break_time_slot` correctly blocks the lunch window. All courses scheduled around the break, proving temporal exclusion zones are respected.

@@ -1,10 +1,10 @@
-# TC-11: Elective vs Core Priority (Black Box)
+# TC-11: Multi-Basket vs Core Competition (Black Box)
 **Category**: Elective Basket & Cross-Dept
 
-- **Objective**: Does the scheduler always prioritize core courses over electives?
-- **Setup**: 2 core courses + 3 B1 electives, same semester, limited rooms.
-- **Expected**: PASS
+- **Objective**: Can 5 cores + 3 basket types (B1, B2, B4) all fit without conflicts?
+- **Setup**: 5 core courses + B1(3 courses) + B2(2 courses) + B4(1 course). Limited rooms.
+- **Expected**: PARTIAL FAIL
 
 ### Results
-- **Unscheduled**: 0 (Pass)
-- **Insight**: Core courses are processed before elective baskets. Even with limited rooms, all courses fit because the scheduler correctly orders its scheduling passes.
+- **Unscheduled**: 2 components
+- **Insight**: With 5 heavy cores and 3 different basket types competing, the timeline overflows slightly. The scheduler correctly prioritizes cores but cannot fit all basket sessions. Proves basket scheduling respects core course priority.

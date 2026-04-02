@@ -1,3 +1,6 @@
-Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,total_students,Section,SectionMode
-CSE,2,CS163,DSA,0,0,2,0,2,Dr. Vivekraj,50,ALL,COMBINED
-CSE,2,CS208,Comp Arch,0,0,2,0,2,Dr. Prabhu,50,ALL,COMBINED
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode
+CSE,2,CS160,Lab Course 1,0,0,2,0,2,Dr. Alpha,YES,50,ALL,COMBINED
+CSE,2,CS161,Lab Course 2,0,0,2,0,2,Dr. Beta,YES,50,ALL,COMBINED
+CSE,2,CS162,Lab Course 3,0,0,2,0,2,Dr. Gamma,YES,50,ALL,COMBINED
+CSE,2,CS163,Lab Course 4,0,0,2,0,2,Dr. Delta,YES,50,ALL,COMBINED
+CSE,2,CS164,Lab Course 5,0,0,2,0,2,Dr. Epsilon,YES,50,ALL,COMBINED

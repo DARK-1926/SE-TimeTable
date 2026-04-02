@@ -7,4 +7,4 @@
 
 ### Results
 - **Unscheduled**: 0 (Pass)
-- **Insight**: The has_component_on_day guard successfully prevents placing a LEC and TUT on the same day. With 5 days available, the scheduler naturally distributes them across different days.
+- **Insight**: `has_component_on_day` guard prevents placing LEC and TUT on the same day. With 5 days, the scheduler distributes them across different days.

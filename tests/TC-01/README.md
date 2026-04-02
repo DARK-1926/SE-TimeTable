@@ -7,4 +7,4 @@
 
 ### Results
 - **Unscheduled**: 16 components
-- **Insight**: The scheduler does not crash under extreme room deficit. It successfully schedules what fits and gracefully reports the rest as unschedulable.
+- **Insight**: The scheduler does not crash under extreme room deficit. It schedules what fits and gracefully reports the rest. Proves robust error handling under resource starvation.

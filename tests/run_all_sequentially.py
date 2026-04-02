@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-TESTS = [f"TC-{i:02d}" for i in range(1, 16)]
+TESTS = [f"TC-{i:02d}" for i in range(1, 21)]
 
 def run_all():
     results = {}

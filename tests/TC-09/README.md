@@ -7,4 +7,4 @@
 
 ### Results
 - **Unscheduled**: 0 (Pass)
-- **Insight**: The schedule_global_elective_baskets function correctly locks shared time slots for all courses within the same basket.
+- **Insight**: `schedule_global_elective_baskets` correctly locks shared time slots for all B1 courses. Students can pick any B1 elective without schedule conflicts.
