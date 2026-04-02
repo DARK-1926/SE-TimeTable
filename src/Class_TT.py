@@ -60,29 +60,29 @@ META_ENTRIES = []
 # Load CSVs
 # ---------------------------
 try:
-    df = pd.read_csv(os.path.join(INPUT_DIR, 'combined.csv'))
-    print(f"✅ Loaded {len(df)} courses from combined.csv")
+    df = pd.read_csv(os.path.join(INPUT_DIR, 'combined_even.csv'))
+    print(f"Loaded {len(df)} courses from combined_even.csv")
 except FileNotFoundError:
     raise SystemExit("Error: 'combined.csv' not found in data directory.")
 
 # --- FIX: Ensure 'total_students' column exists ---
 if "total_students" not in df.columns:
-    print("⚠️ Warning: 'total_students' column not in combined.csv. Defaulting to 50.")
+    print(" Warning: 'total_students' column not in combined.csv. Defaulting to 50.")
     df["total_students"] = 50
 df["total_students"] = pd.to_numeric(df["total_students"], errors='coerce').fillna(50).astype(int)
-print(f"✅ Processed student strengths (defaulting to 50)")
+print(f" Processed student strengths (defaulting to 50)")
 # --- END FIX ---
 
 try:
     rooms_df = pd.read_csv(os.path.join(INPUT_DIR, 'rooms.csv'))
-    print(f"✅ Loaded {len(rooms_df)} rooms from rooms.csv")
+    print(f" Loaded {len(rooms_df)} rooms from rooms.csv")
 except FileNotFoundError:
-    print("⚠️ Warning: rooms.csv not found. Using empty rooms list.")
+    print(" Warning: rooms.csv not found. Using empty rooms list.")
     rooms_df = pd.DataFrame(columns=['roomNumber', 'type', 'capacity'])
 
 # --- FIX: Process and store room capacities ---
 if 'capacity' not in rooms_df.columns:
-    print("⚠️ Warning: 'capacity' column not in rooms.csv. Defaulting all rooms to 50.")
+    print(" Warning: 'capacity' column not in rooms.csv. Defaulting all rooms to 50.")
     rooms_df['capacity'] = 50
 if 'type' not in rooms_df.columns:
     rooms_df['type'] = 'LECTURE_ROOM' # Default type
@@ -99,7 +99,7 @@ for _, row in rooms_df.iterrows():
         'capacity': row['capacity']
     }
 
-print(f"\n📊 Room inventory: {len(ROOM_DATA)} rooms loaded with capacity data.")
+print(f"\n Room inventory: {len(ROOM_DATA)} rooms loaded with capacity data.")
 room_types_summary = rooms_df.groupby('type').size().to_dict()
 for rtype, count in room_types_summary.items():
     print(f"   - {rtype}: {count}")
@@ -146,7 +146,7 @@ def generate_time_slots():
     return slots
 
 TIME_SLOTS = generate_time_slots()
-print(f"⏰ Generated {len(TIME_SLOTS)} time slots (no morning break, lunch 13:15-14:00)")
+print(f" Generated {len(TIME_SLOTS)} time slots (no morning break, lunch 13:15-14:00)")
 
 # ---------------------------
 # Helper functions
@@ -390,7 +390,7 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
                     course_room_mapping[mapping_key] = 'C004'
                     for si in slot_indices:
                         room_schedule['C004'][day].add(si)
-                    print(f"    ✅ Assigned C004 for large course {course_code} (needs {student_strength})")
+                    print(f"     Assigned C004 for large course {course_code} (needs {student_strength})")
                     return 'C004'
     except Exception:
         # If anything goes wrong with the C004 attempt, fall through to normal logic
@@ -429,7 +429,7 @@ def find_suitable_room_for_slot(course_code, room_type, day, slot_indices, room_
             for si in slot_indices:
                 room_schedule[r1][day].add(si)
                 room_schedule[r2][day].add(si)
-            print(f"    ✅ Assigned combined labs {combined_name} for {course_code} (combined capacity {best_pair_cap}, needs {student_strength})")
+            print(f"     Assigned combined labs {combined_name} for {course_code} (combined capacity {best_pair_cap}, needs {student_strength})")
             return combined_name
 
     # No single free and suitable room found
@@ -888,7 +888,7 @@ def enforce_basket_slots(timetable, semester, global_basket_schedule):
 def schedule_global_elective_baskets(df_input, professor_schedule, room_schedule, course_room_mapping):
     """Pre-schedule elective baskets globally"""
     print("\n" + "="*80)
-    print("🎓 GLOBAL ELECTIVE BASKET SCHEDULING")
+    print(" GLOBAL ELECTIVE BASKET SCHEDULING")
     print("="*80)
     
     basket_groups = {}
@@ -923,7 +923,7 @@ def schedule_global_elective_baskets(df_input, professor_schedule, room_schedule
     global_semester_adj = {}
     
     for (semester, basket_name), basket_courses in sorted(basket_groups.items()):
-        print(f"\n📚 Semester {semester}, Basket {basket_name}: {len(basket_courses)} courses")
+        print(f"\n Semester {semester}, Basket {basket_name}: {len(basket_courses)} courses")
         
         # Get the correct global slot lock for this basket type (e.g., 'B1's lock)
         current_basket_global_slots = global_basket_slots_by_type[basket_name]
@@ -1097,7 +1097,7 @@ def schedule_global_elective_baskets(df_input, professor_schedule, room_schedule
                     current_basket_global_slots[day].update(slot_indices) # Add to 'B1' lock
                     scheduled = True
                     slot_time = TIME_SLOTS[slot_indices[0]][0].strftime('%H:%M')
-                    print(f"    ✅ Tutorial {session_num+1}/{tut_sessions}: {DAYS[day]} at {slot_time}")
+                    print(f"     Tutorial {session_num+1}/{tut_sessions}: {DAYS[day]} at {slot_time}")
                     break
             
             if not scheduled:
@@ -1129,10 +1129,10 @@ def schedule_global_elective_baskets(df_input, professor_schedule, room_schedule
                         current_basket_global_slots[day].update(slot_indices)
                         scheduled = True
                         slot_time = TIME_SLOTS[slot_indices[0]][0].strftime('%H:%M')
-                        print(f"    ✅ Tutorial {session_num+1}/{tut_sessions} (relaxed): {DAYS[day]} at {slot_time}")
+                        print(f"     Tutorial {session_num+1}/{tut_sessions} (relaxed): {DAYS[day]} at {slot_time}")
                         break
                 if not scheduled:
-                    print(f"    ⚠️ Could not schedule Tutorial {session_num+1}/{tut_sessions}")
+                    print(f"     Could not schedule Tutorial {session_num+1}/{tut_sessions}")
         
         # Schedule labs
         for session_num in range(lab_sessions):
@@ -1197,7 +1197,7 @@ def schedule_global_elective_baskets(df_input, professor_schedule, room_schedule
                     global_semester_adj[semester]['LAB'][day].update(slot_indices)
                     scheduled = True
                     slot_time = TIME_SLOTS[slot_indices[0]][0].strftime('%H:%M')
-                    print(f"    ✅ Lab {session_num+1}/{lab_sessions}: {DAYS[day]} at {slot_time}")
+                    print(f"     Lab {session_num+1}/{lab_sessions}: {DAYS[day]} at {slot_time}")
                     break
             
             if not scheduled:
@@ -1234,16 +1234,16 @@ def schedule_global_elective_baskets(df_input, professor_schedule, room_schedule
                         current_basket_global_slots[day].update(slot_indices)
                         scheduled = True
                         slot_time = TIME_SLOTS[slot_indices[0]][0].strftime('%H:%M')
-                        print(f"    ✅ Lab {session_num+1}/{lab_sessions} (relaxed): {DAYS[day]} at {slot_time}")
+                        print(f"     Lab {session_num+1}/{lab_sessions} (relaxed): {DAYS[day]} at {slot_time}")
                         break
                 if not scheduled:
-                    print(f"    ⚠️ Could not schedule Lab {session_num+1}/{lab_sessions}")
+                    print(f"     Could not schedule Lab {session_num+1}/{lab_sessions}")
         
         global_schedule[(semester, basket_name)] = basket_schedule
-        print(f"    📋 Total sessions scheduled: {len(basket_schedule)}")
+        print(f"     Total sessions scheduled: {len(basket_schedule)}")
     
     print("\n" + "="*80)
-    print(f"✅ Global basket scheduling complete: {len(global_schedule)} baskets")
+    print(f" Global basket scheduling complete: {len(global_schedule)} baskets")
     print("="*80 + "\n")
     
     return global_schedule
@@ -1443,7 +1443,7 @@ def generate_all_timetables():
                         course_faculty_map[code] = select_faculty(c.get('Faculty', 'TBD'))
 
                 # Apply global basket schedules (per semester, across all branches)
-                print(f"\n📋 Applying basket schedules for {section_title}...")
+                print(f"\n Applying basket schedules for {section_title}...")
 
                 # Map basket -> courses in this section
                 basket_courses_map = {}
@@ -1517,7 +1517,7 @@ def generate_all_timetables():
 
                         basket_scheduled_courses.add(code)
 
-                    print(f"    ✅ Applied {basket} schedule to {len(courses_in_basket)} courses")
+                    print(f"     Applied {basket} schedule to {len(courses_in_basket)} courses")
 
                 # Schedule combined courses once (A), then apply same slots to B
                 if dept_upper == "CSE" and section_label in ["A", "B"] and combined_courses_all is not None and not combined_courses_all.empty:
@@ -1550,7 +1550,7 @@ def generate_all_timetables():
                             )
 
                 # Schedule non-elective courses
-                print(f"\n📖 Scheduling non-elective courses for {section_title}...")
+                print(f"\n Scheduling non-elective courses for {section_title}...")
                 for _, course in courses_combined.iterrows():
                     code = str(course.get('Course Code', '')).strip()
                     
@@ -1697,19 +1697,19 @@ def generate_all_timetables():
             pass
 
     # Save workbook
-    out_filename = os.path.join(OUTPUT_DIR, "timetable_all_departments.xlsx")
+    out_filename = os.path.join(OUTPUT_DIR, "timetable_all_departments_even.xlsx")
     try:
         wb.save(out_filename)
-        print(f"\n✅ Combined timetable saved as {out_filename}")
+        print(f"\n Combined timetable saved as {out_filename}")
     except Exception as e:
-        print(f"❌ Failed to save timetable: {e}")
+        print(f" Failed to save timetable: {e}")
         traceback.print_exc()
 
     # Generate teacher and unscheduled workbooks
     try:
         create_teacher_and_unscheduled_from_combined(out_filename, unscheduled_components)
     except Exception as e:
-        print("❌ Failed to generate teacher/unscheduled workbooks:", e)
+        print(" Failed to generate teacher/unscheduled workbooks:", e)
         traceback.print_exc()
 
     return out_filename
@@ -2307,15 +2307,15 @@ def write_timetable_to_sheet(ws, timetable, section_subject_color, course_facult
         # Use the code itself (which is unique, e.g., "B1-MA161")
         assigned_room = course_room_mapping.get(f"{code}_LEC") or \
                         course_room_mapping.get(f"{code}_LAB") or \
-                        course_room_mapping.get(f"{code}_TUT") or "—"
+                        course_room_mapping.get(f"{code}_TUT") or ""
         
-        if not assigned_room or assigned_room == "—":
+        if not assigned_room or assigned_room == "":
             # Try to find a room for the base code if full code fails
             base_code = get_base_course_code(code)
             assigned_room = course_room_mapping.get(f"{base_code}_LEC") or \
                             course_room_mapping.get(f"{base_code}_LAB") or \
-                            course_room_mapping.get(f"{base_code}_TUT") or "—"
-            if not assigned_room or assigned_room == "—":
+                            course_room_mapping.get(f"{base_code}_TUT") or ""
+            if not assigned_room or assigned_room == "":
                 continue # Skip if no room is mapped at all
         
         ws.row_dimensions[current_row].height = 30
@@ -2494,7 +2494,7 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
     try:
         wb = load_workbook(timetable_filename, data_only=True)
     except Exception as e:
-        print(f"❌ Failed to open {timetable_filename}: {e}")
+        print(f" Failed to open {timetable_filename}: {e}")
         return
     
     teacher_slots = {}
@@ -2621,10 +2621,11 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
                     teacher_slots[f][day_idx][c - 2] = format_teacher_entry(code, typ, sheetname, room)
                     teacher_slot_types[f][day_idx][c - 2] = typ or ''
     
-    # Create teacher workbook
-    twb = Workbook()
-    if "Sheet" in twb.sheetnames:
-        twb.remove(twb["Sheet"])
+    if teacher_slots:
+        # Create teacher workbook
+        twb = Workbook()
+        if "Sheet" in twb.sheetnames:
+            twb.remove(twb["Sheet"])
     
     # Softer header and light component fills for teacher sheets
     header_fill = PatternFill(start_color="E3F2FD", end_color="E3F2FD", fill_type="solid")
@@ -2644,7 +2645,7 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
         ws = twb.create_sheet(title=safe_name)
         
         ws.merge_cells("A1:{}1".format(get_column_letter(len(slot_headers) + 1)))
-        title_cell = ws.cell(row=1, column=1, value=f"{teacher} — Weekly Timetable")
+        title_cell = ws.cell(row=1, column=1, value=f"{teacher}  Weekly Timetable")
         title_cell.font = title_font
         title_cell.alignment = Alignment(horizontal="center", vertical="center")
         
@@ -2691,8 +2692,10 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
         for col in range(2, len(slot_headers) + 2):
             ws.column_dimensions[get_column_letter(col)].width = 20
     
-    twb.save(os.path.join(OUTPUT_DIR, "teacher_timetables.xlsx"))
-    print("✅ Saved teacher_timetables.xlsx")
+        twb.save(os.path.join(OUTPUT_DIR, "teacher_timetables_even.xlsx"))
+        print(" Saved teacher_timetables.xlsx")
+    else:
+        print(" No teacher timetables to save.")
     
     # Create unscheduled workbook
     uwb = Workbook()
@@ -2742,23 +2745,26 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
                 "Reason": reason_text
             }
     
-    for entry in unscheduled_unique.values():
-        ws.append([entry["Course Code"], entry["Department"], entry["Semester"], 
-                   entry["Component Type"], entry["Reason"]])
-    
-    for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
-        for cell in row:
-            cell.border = border
-            cell.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
-    
-    ws.column_dimensions['A'].width = 20
-    ws.column_dimensions['B'].width = 15
-    ws.column_dimensions['C'].width = 10
-    ws.column_dimensions['D'].width = 20
-    ws.column_dimensions['E'].width = 50
-    
-    uwb.save(os.path.join(OUTPUT_DIR, "unscheduled_courses.xlsx"))
-    print(f"✅ Saved unscheduled_courses.xlsx with {len(unscheduled_unique)} courses")
+    if unscheduled_unique:
+        for entry in unscheduled_unique.values():
+            ws.append([entry["Course Code"], entry["Department"], entry["Semester"], 
+                       entry["Component Type"], entry["Reason"]])
+        
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
+            for cell in row:
+                cell.border = border
+                cell.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
+        
+        ws.column_dimensions['A'].width = 20
+        ws.column_dimensions['B'].width = 15
+        ws.column_dimensions['C'].width = 10
+        ws.column_dimensions['D'].width = 20
+        ws.column_dimensions['E'].width = 50
+        
+        uwb.save(os.path.join(OUTPUT_DIR, "unscheduled_courses_even.xlsx"))
+        print(f" Saved unscheduled_courses.xlsx with {len(unscheduled_unique)} courses")
+    else:
+        print(" No unscheduled courses to save.")
 
 
 # ---------------------------
@@ -2767,9 +2773,9 @@ def create_teacher_and_unscheduled_from_combined(timetable_filename, unscheduled
 if __name__ == "__main__":
     try:
         print("\n" + "="*80)
-        print("🎓 IIIT DHARWAD TIMETABLE GENERATOR")
+        print(" IIIT DHARWAD TIMETABLE GENERATOR")
         print("="*80)
-        print("\n🔧 Configuration:")
+        print("\n Configuration:")
         print(f"    - No morning break (removed 10:30-10:45)")
         print(f"    - Lunch break: 13:15-14:00 (extended)")
         print(f"    - Lecture duration: {LECTURE_MIN} minutes")
@@ -2782,13 +2788,13 @@ if __name__ == "__main__":
         
         
         print("\n" + "="*80)
-        print("✅ TIMETABLE GENERATION COMPLETE!")
+        print("TIMETABLE GENERATION COMPLETE!")
         print("="*80)
-        print(f"\n📁 Output files saved in: {OUTPUT_DIR}")
-        print("    1. timetable_all_departments.xlsx - Main timetable")
-        print("    2. teacher_timetables.xlsx - Faculty schedules")
-        print("    3. unscheduled_courses.xlsx - Courses that couldn't be scheduled")
-        print("\n💡 Tips:")
+
+        print("    1. timetable_all_departments_even.xlsx - Main timetable")
+        print("    2. teacher_timetables_even.xlsx - Faculty schedules")
+        print("    3. unscheduled_courses_even.xlsx - Courses that couldn't be scheduled")
+        print("\n Tips:")
         print("    - Check unscheduled_courses.xlsx to see which courses failed")
         print("    - If many courses are unscheduled, consider:")
         print("      * Adding more computer labs or larger lecture rooms")
@@ -2798,7 +2804,7 @@ if __name__ == "__main__":
         
     except Exception as e:
         print("\n" + "="*80)
-        print("❌ ERROR DURING TIMETABLE GENERATION")
+        print("ERROR DURING TIMETABLE GENERATION")
         print("="*80)
         print(f"Error: {e}")
         traceback.print_exc()

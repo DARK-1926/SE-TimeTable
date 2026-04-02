@@ -1,0 +1,4 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode,CrossDeptGroup,CrossDeptMode
+CSE,2,B1-CS121,Basket 1 Course,3,1,0,0,4,Dr. Abdul Wahid,YES,50,ALL,COMBINED,,
+CSE,2,B2-CS122,Basket 2 Course,3,1,0,0,4,Dr. Sunil Saumya,YES,50,ALL,COMBINED,,
+CSE,2,B3-CS123,Basket 3 Course,3,1,0,0,4,Dr. Somen Bhattacharjee,YES,50,ALL,COMBINED,,
