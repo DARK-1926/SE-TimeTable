@@ -1,0 +1,3 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode,CrossDeptGroup,CrossDeptMode
+CSE,2,CS101,DS Lecture A,3,1,0,0,4,Dr. Abdul Wahid,YES,50,Section A,SPLIT,,
+CSE,2,CS101,DS Lecture B,3,1,0,0,4,Dr. Sunil Saumya,YES,50,Section B,SPLIT,,

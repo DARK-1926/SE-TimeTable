@@ -1,0 +1,3 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode
+CSE,4,CS501,2hr Lecture Course,2,0,0,0,2,Dr. BlockTest,YES,50,ALL,COMBINED
+CSE,4,CS502,Normal 3hr Lecture,3,1,0,0,4,Dr. NormalTest,YES,50,ALL,COMBINED

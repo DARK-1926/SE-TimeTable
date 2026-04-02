@@ -1,0 +1,6 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,total_students,Section,SectionMode
+CSE,4,CS1,Subject 1,3,1,0,0,4,Dr. Prof1,50,ALL,COMBINED
+CSE,4,CS2,Subject 2,3,1,0,0,4,Dr. Prof2,50,ALL,COMBINED
+CSE,4,CS3,Subject 3,3,1,0,0,4,Dr. Prof3,50,ALL,COMBINED
+CSE,4,CS4,Subject 4,3,1,0,0,4,Dr. Prof4,50,ALL,COMBINED
+CSE,4,CS5,Subject 5,3,1,0,0,4,Dr. Prof5,50,ALL,COMBINED

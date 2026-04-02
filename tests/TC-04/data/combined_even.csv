@@ -1,0 +1,16 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode
+CSE,4,CS401,Algorithms,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS402,Networks,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS403,OS,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS404,DBMS,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS405,AI,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS406,ML,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS407,Compilers,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS408,Graphics,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS409,Security,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS410,Cloud,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS411,Distributed,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS412,HCI,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS413,Robotics,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS414,NLP,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED
+CSE,4,CS415,Blockchain,3,1,0,0,4,Dr. Overloaded,YES,50,ALL,COMBINED

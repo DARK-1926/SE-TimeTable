@@ -1,0 +1,3 @@
+id,roomNumber,capacity,type
+C101,101,60,LECTURE_ROOM
+C102,102,60,LECTURE_ROOM
