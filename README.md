@@ -119,11 +119,39 @@ Each test produces exactly 3 essential files in its `results/` folder:
 - `timetable_all_departments_even.xlsx`: The generated departmental schedule.
 - `teacher_timetables_even.xlsx`: Faculty-specific schedules.
 
-## Troubleshooting
+## 🧪 Test Case Inventory
 
-- `combined.csv` not found: Ensure `data/combined.csv` exists.
-- Rooms not loading: Check `data/rooms.csv` headers and values.
-- Many unscheduled courses:
-  - Add more rooms or increase room capacities.
-  - Relax constraints in `data/config.json`.
-  - Extend the available time slots.
+The following 20 test scenarios are used to validate the scheduler's performance and constraint enforcement:
+
+| ID        | Category | Focus / Scenario                                                                          |
+| :-------- | :------- | :---------------------------------------------------------------------------------------- |
+| **TC-01** | Stress   | **Room Starvation**: Deliberately starves the system of classrooms.                       |
+| **TC-02** | Stress   | **Faculty Starvation**: Multiple courses assigned to the same unassigned "TBD" faculty.   |
+| **TC-03** | Stress   | **Student Starvation**: Total students in a section exceed all available room capacities. |
+| **TC-04** | Stress   | **Peak Load**: Maximizes sessions per day to test slot availability.                      |
+| **TC-05** | Logic    | **Basic CSE**: Validates standard Semester 4 scheduling.                                  |
+| **TC-06** | Logic    | **Basic ECE**: Validates standard Semester 6 scheduling.                                  |
+| **TC-07** | Logic    | **Basic DSAI**: Validates standard Semester 2 scheduling.                                 |
+| **TC-08** | Logic    | **Multiple Baskets**: Multiple elective baskets in a single semester.                     |
+| **TC-09** | Logic    | **Shared Faculty**: Single faculty member teaching across multiple departments.           |
+| **TC-10** | Logic    | **Large Hall**: Validates auto-allocation of C004 for 120+ students.                      |
+| **TC-11** | Stress   | **Lab Starvation**: Deliberately restricts Computer Lab availability.                     |
+| **TC-12** | Logic    | **Session Stacking**: Multiple Tut/Labs on the same day.                                  |
+| **TC-13** | Stress   | **High Capacity**: Multiple courses requiring >120 capacity rooms.                        |
+| **TC-14** | Logic    | **Semester 1 (Odd)**: Basic odd semester scheduling.                                      |
+| **TC-15** | Logic    | **Semester 5 (Odd)**: Advanced odd semester scheduling.                                   |
+| **TC-16** | Feature  | **Multi-Department**: Simultaneous CSE + ECE generation.                                  |
+| **TC-17** | Feature  | **Multi-Section**: Simultaneous CSE Section A + Section B.                                |
+| **TC-18** | Feature  | **Shared Courses**: Validates `CE_SHARED` room and strength synchronization.              |
+| **TC-19** | Feature  | **Full Institute (Even)**: All departments, all even semesters.                           |
+| **TC-20** | Feature  | **Full Institute (Odd)**: All departments, all odd semesters.                             |
+
+## 🐞 Known Logic Failures (To be fixed in `devM`)
+
+The following critical bugs were identified during testing:
+
+1.  **Bug #2 (Faculty Collision):** All unassigned faculty default to a generic "TBD" string. The scheduler treats them as a single person, preventing multiple "TBD" courses from being scheduled at the same time.
+2.  **Bug #3 (CE_SHARED Synchronization):** Cross-department shared courses fail to communicate. They may be assigned to different rooms by different departments and fail to aggregate total student strength for capacity checks.
+3.  **Bug #4 (Room Overlap & Phantom Bookings):** Elective baskets can double-book rooms during the same time slot. Additionally, unscheduled courses may incorrectly appear in reports with "Room: None".
+
+These issues are resolved in the **`devM`** branch.
