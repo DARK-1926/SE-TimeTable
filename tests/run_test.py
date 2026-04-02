@@ -11,6 +11,10 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, 'output')
 
 def setup_test_case(tc_id):
     tc_path = os.path.join(TESTS_DIR, tc_id)
+    if not os.path.exists(tc_path):
+        # Check legacy folder
+        tc_path = os.path.join(TESTS_DIR, 'legacy', tc_id)
+    
     tc_data_path = os.path.join(tc_path, 'data')
     
     if not os.path.exists(tc_data_path):
@@ -60,7 +64,11 @@ def run_scheduler():
     return result
 
 def save_results(tc_id):
-    tc_output_path = os.path.join(TESTS_DIR, tc_id, 'results')
+    tc_path = os.path.join(TESTS_DIR, tc_id)
+    if not os.path.exists(tc_path):
+        tc_path = os.path.join(TESTS_DIR, 'legacy', tc_id)
+        
+    tc_output_path = os.path.join(tc_path, 'results')
     if os.path.exists(tc_output_path):
         shutil.rmtree(tc_output_path)
     os.makedirs(tc_output_path)
