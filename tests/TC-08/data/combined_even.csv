@@ -1,0 +1,4 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,total_students,Section,SectionMode
+CSE,2,MA163,Linear Algebra,3,1,0,0,2,Dr. Anand,110,ALL,COMBINED
+CSE,2,CS163,DSA,3,0,2,0,4,Dr. Vivekraj,55,A,SPLIT
+CSE,2,CS163,DSA,3,0,2,0,4,Dr. Hazra,55,B,SPLIT

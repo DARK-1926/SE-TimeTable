@@ -1,0 +1,4 @@
+Department,Semester,Course Code,Course Name,L,T,P,S,C,Faculty,Schedule,total_students,Section,SectionMode
+CSE,2,B1-CS154,Intro Data Analytics,3,1,0,0,2,Dr. Abdul,YES,30,,
+CSE,2,B1-EC156,Intro Sensors,3,1,0,0,2,Dr. Eswaran,YES,20,,
+CSE,2,B1-ASD152,Visual Design,3,1,0,0,2,Dr. Sandesh,YES,15,,
