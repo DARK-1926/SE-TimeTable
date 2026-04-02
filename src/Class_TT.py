@@ -188,10 +188,12 @@ def is_minor_slot(slot):
     
     return False
 
-def select_faculty(faculty_field):
+def select_faculty(faculty_field, course_code=None):
     if pd.isna(faculty_field) or str(faculty_field).strip().lower() in ['nan', 'none', '']:
-        return "TBD"
+        return f"TBD_{course_code}" if course_code else "TBD"
     s = str(faculty_field).strip()
+    if s.lower() == 'tbd':
+        return f"TBD_{course_code}" if course_code else "TBD"
     for sep in ['/', ',', '&', ';']:
         if sep in s:
             return s.split(sep)[0].strip()
@@ -598,7 +600,7 @@ def place_course_on_slots(course_row, timetable, day, slot_indices, comp_type,
         return False
     base_code = get_base_course_code(code)
     name = str(course_row.get('Course Name', '')).strip()
-    faculty = select_faculty(course_row.get('Faculty', 'TBD'))
+    faculty = select_faculty(course_row.get('Faculty', 'TBD'), course_code=code)
     student_strength = int(course_row.get('total_students', 50))
 
     if not skip_prof_check:
@@ -644,8 +646,10 @@ def schedule_crossdept_group(timetable, group_courses, semester, professor_sched
     rep_course = group_courses.iloc[0]
     code = str(rep_course.get('Course Code', '')).strip()
     base_code = get_base_course_code(code)
-    faculty = select_faculty(rep_course.get('Faculty', 'TBD'))
-    student_strength = int(rep_course.get('total_students', 50))
+    faculty = select_faculty(rep_course.get('Faculty', 'TBD'), course_code=str(rep_course.get('Course Code', '')).strip())
+    
+    # Aggregate total students for the entire group
+    student_strength = group_courses['total_students'].sum() if 'total_students' in group_courses.columns else 50
 
     if faculty not in professor_schedule:
         professor_schedule[faculty] = {d: set() for d in range(len(DAYS))}
@@ -699,7 +703,8 @@ def schedule_crossdept_group(timetable, group_courses, semester, professor_sched
                 schedule_entries.append({
                     'day': day,
                     'slot_indices': list(slot_indices),
-                    'comp_type': comp_type
+                    'comp_type': comp_type,
+                    'room': candidate_room
                 })
                 return True
         return False
@@ -734,7 +739,7 @@ def apply_crossdept_schedule(timetable, group_courses, schedule_entries, profess
             place_course_on_slots(
                 row, timetable, entry['day'], entry['slot_indices'], entry['comp_type'],
                 professor_schedule, room_schedule, course_room_mapping, course_day_components,
-                skip_prof_check=True
+                room_override=entry.get('room'), skip_prof_check=True
             )
 
 def schedule_combined_courses(timetable, combined_courses, semester, professor_schedule,
@@ -747,7 +752,7 @@ def schedule_combined_courses(timetable, combined_courses, semester, professor_s
             continue
         base_code = get_base_course_code(code)
         name = str(course.get('Course Name', '')).strip()
-        faculty = select_faculty(course.get('Faculty', 'TBD'))
+        faculty = select_faculty(course.get('Faculty', 'TBD'), course_code=code)
         student_strength = int(course.get('total_students', 50))
 
         if faculty not in professor_schedule:
@@ -1440,7 +1445,7 @@ def generate_all_timetables():
                                 section_subject_color[code] = next(color_iter)
                             except StopIteration:
                                 section_subject_color[code] = random.choice(SUBJECT_COLORS)
-                        course_faculty_map[code] = select_faculty(c.get('Faculty', 'TBD'))
+                        course_faculty_map[code] = select_faculty(c.get('Faculty', 'TBD'), course_code=code)
 
                 # Apply global basket schedules (per semester, across all branches)
                 print(f"\n Applying basket schedules for {section_title}...")
@@ -1478,7 +1483,7 @@ def generate_all_timetables():
                             continue
                         base_code = get_base_course_code(code)
                         name = str(course.get('Course Name', '')).strip()
-                        faculty = select_faculty(course.get('Faculty', 'TBD'))
+                        faculty = select_faculty(course.get('Faculty', 'TBD'), course_code=code)
                         student_strength = int(course.get('total_students', 50))
 
                         if faculty not in professor_schedule:
@@ -1563,7 +1568,7 @@ def generate_all_timetables():
                     
                     base_code = get_base_course_code(code)
                     name = str(course.get('Course Name', '')).strip()
-                    faculty = select_faculty(course.get('Faculty', 'TBD'))
+                    faculty = select_faculty(course.get('Faculty', 'TBD'), course_code=str(course.get('Course Code', '')).strip())
                     student_strength = int(course.get('total_students', 50)) # <-- ADDED
 
                     if faculty not in professor_schedule:
@@ -1789,7 +1794,7 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
                     section_subject_color[code] = next(color_iter)
                 except StopIteration:
                     section_subject_color[code] = random.choice(SUBJECT_COLORS)
-            course_faculty_map[code] = select_faculty(c.get('Faculty', 'TBD'))
+            course_faculty_map[code] = select_faculty(c.get('Faculty', 'TBD'), course_code=code)
     
     # Schedule non-electives as before, and schedule elective baskets together
     non_electives = courses_combined[courses_combined['is_elective'] == False]
@@ -1800,7 +1805,7 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
         code = str(course_row.get('Course Code', '')).strip()
         base_code = get_base_course_code(code)
         name = str(course_row.get('Course Name', '')).strip()
-        faculty = select_faculty(course_row.get('Faculty', 'TBD'))
+        faculty = select_faculty(course_row.get('Faculty', 'TBD'), course_code=code)
         student_strength = int(course_row.get('total_students', 50))
 
         if faculty not in professor_schedule:
@@ -1885,7 +1890,7 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
             lab_sessions_needed = int(lab_count * 60 / LAB_MIN) if lab_count > 0 else 0
 
             # Aggregate faculties and student strengths
-            facs = [select_faculty(r.get('Faculty', 'TBD')) for r in rows]
+            facs = [select_faculty(r.get('Faculty', 'TBD'), course_code=str(r.get('Course Code', '')).strip()) for r in rows]
             facs = [f for f in facs if f]
             unique_facs = list(dict.fromkeys(facs))
             agg_faculty = '/'.join(unique_facs) if unique_facs else 'TBD'
@@ -1958,7 +1963,7 @@ def generate_7th_sem_common_timetable(wb, course_data_list, overview, row_index,
                         for row in rows:
                             course_code = str(row.get('Course Code', '')).strip()
                             base = get_base_course_code(course_code)
-                            faculty_c = select_faculty(row.get('Faculty', 'TBD'))
+                            faculty_c = select_faculty(row.get('Faculty', 'TBD'), course_code=str(row.get('Course Code', '')).strip())
                             strength_c = int(row.get('total_students', 50))
                             room_type_c = get_required_room_type(comp_type)
 
@@ -2142,7 +2147,7 @@ def write_timetable_to_sheet(ws, timetable, section_subject_color, course_facult
                             if not full_code:
                                 continue
                             base_c = get_base_course_code(full_code)
-                            fac_b = select_faculty(brow.get('Faculty', 'TBD'))
+                            fac_b = select_faculty(brow.get('Faculty', 'TBD'), course_code=full_code)
                             room_b = course_room_mapping.get(f"{full_code}_{typ}") or \
                                      course_room_mapping.get(f"{base_c}_{typ}") or cls
                             META_ENTRIES.append({
